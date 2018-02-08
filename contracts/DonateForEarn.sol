@@ -8,6 +8,7 @@ contract DonateForEarn {
     
     address[] donaters = new address[](0);
     uint[] donchart = new uint[](0);
+    uint totalDonation;
 
     event MinDonate(uint newValue);
     event Donation(address from, uint value);
@@ -17,6 +18,7 @@ contract DonateForEarn {
         minDonation = 450;
         MinDonate(minDonation);
         owner = msg.sender;
+        totalDonation = 0;
         
     }
 
@@ -42,16 +44,14 @@ contract DonateForEarn {
     }
 
     function donate() public payable {
-        uint amount = msg.value;
-        Donation(msg.sender, amount);
+        
         require(amount > minDonation);
         require(msg.sender != owner);
-        
-        
-        // totalDonation += amount;
+        uint amount = msg.value;
+        Donation(msg.sender, amount);
+        totalDonation += amount;
         
         amount /= 2;
-        
         owner.transfer(amount);
         
         if(donaters.length > 0){
