@@ -44,10 +44,10 @@ contract DonateForEarn {
     }
 
     function donate() public payable {
-        
+        uint amount = msg.value;
         require(amount > minDonation);
         require(msg.sender != owner);
-        uint amount = msg.value;
+        
         Donation(msg.sender, amount);
         totalDonation += amount;
         
